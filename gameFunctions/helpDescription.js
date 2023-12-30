@@ -1,14 +1,14 @@
 const { PREFIX } = require("../utils/prefix&command");
 const Discord = require("discord.js");
-
+// this is written in md since discord allows md
 const helpDescription = `
 # PREFIX = "\`${PREFIX}\`"
-\n> Welcome to the Wordle Bot! Here are the commands you can use:
+> Welcome to the Wordle Bot! Here are the commands you can use:
 
 ## __Commands__
 
 - To start a new game, type: \` ${PREFIX}wordle \`.
-    - This command will only work once a game ends.
+    	- This command will only work once a game ends.
 
 - To make a guess, type: \` ${PREFIX}<your guess> \`.
 	- The prefix needed to distinguish between normal text and guesses.
