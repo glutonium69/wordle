@@ -1,5 +1,5 @@
 // a function that returns ANSI code to color individual letters
-function colorText(text, color){
+function getANSIcode(text, color){
 	switch(color){
 		case "white":
 	  		return `|\u001b[1;37m${text}\u001b[0;0m|`
@@ -12,4 +12,4 @@ function colorText(text, color){
 	}
 }
 
-module.exports = colorText;
+module.exports = getANSIcode;
