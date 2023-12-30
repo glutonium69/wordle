@@ -1,3 +1,4 @@
+// a function that returns ANSI code to color individual letters
 function colorText(text, color){
 	switch(color){
 		case "white":
