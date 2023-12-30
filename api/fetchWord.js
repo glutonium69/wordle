@@ -5,7 +5,7 @@ async function fetchWord(){
 		const data = await res.json()
 		return data[0];
 	}
-		catch(err){
+	catch(err){
 		console.log(err);
 		return "Error";
 	}
