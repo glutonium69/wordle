@@ -8,7 +8,7 @@ const { COMMANDS, PREFIX } = require("./utils/prefix&command.js");
 const handleGuesses = require("./gameFunctions/handleGuesses.js");
 const { handleWin, handleLoose } = require("./gameFunctions/handleWinOrLose.js");
 const sendHelpEmbed = require("./gameFunctions/sendHelpEmbed.js");
-const startGame = require("./gameFunctions/startGame.js");
+const setGame = require("./gameFunctions/setGame.js");
 const isValid = require("./api/isValid.js");
 
 client.on("ready", () => {
@@ -16,7 +16,6 @@ client.on("ready", () => {
 });
 
 const TOTAL_TRIES = 8;
-// bot turns off automatically after a certain time of inactivity
 const timeTillBotTurnsOff = 10 * (60 * 1000); // minute -> mili-sec
 const gameInstances = new Map();
 
@@ -37,7 +36,7 @@ class Wordle {
 	async initializeStart(){
 		// startGame() fetches a word with api call,
 		// and makes starting embed and returns the fetched word or "Error" if error occurs
-		this.PICKED_WORD = await startGame(this.e, TOTAL_TRIES);
+		this.PICKED_WORD = await setGame(this.e, TOTAL_TRIES);
 		this.PICKED_WORD_DEFINITION = ( await isValid(this.PICKED_WORD) ).definition;
 		this.GUESSED_WORD = this.PICKED_WORD;
 		// stop executing if an error occurs from the api call
