@@ -1,4 +1,4 @@
-const PREFIX = "!";
+const PREFIX = ";";
 const COMMANDS = {
 	start: PREFIX + "wordle",
 	end: PREFIX + "end",
