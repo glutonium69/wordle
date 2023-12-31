@@ -6,9 +6,8 @@ const client = new Discord.Client({
 const listen = require("./server.js");
 const { COMMANDS, PREFIX } = require("./utils/prefix&command.js");
 const handleGuesses = require("./gameFunctions/handleGuesses.js");
-const { handleWin, handleLoose 
-	  } = require("./gameFunctions/handleWinOrLose.js");
-const helpDescriptionEmbed = require("./gameFunctions/helpDescription.js");
+const { handleWin, handleLoose } = require("./gameFunctions/handleWinOrLose.js");
+const sendHelpEmbed = require("./gameFunctions/sendHelpEmbed.js");
 const startGame = require("./gameFunctions/startGame.js");
 const isValid = require("./api/isValid.js");
 
@@ -33,57 +32,39 @@ class Wordle {
 		this.triesLeft = TOTAL_TRIES;
 	}
 
-	resetVariables(){
-		this.PICKED_WORD = undefined;
-		this.hasGameStarted = false;
-		this.triesLeft = TOTAL_TRIES;
-	}
 
-	shutDown(){
-		this.e.channel.send("The game has ended due to inactivity.");
-		handleLoose(
-			this.e,
-			this.GUESSED_WORD,
-			this.GUESSED_WORD_ARR,
-			this.PICKED_WORD,
-			this.triesLeft,
-			this.PICKED_WORD_DEFINITION
-		);
-		this.resetVariables();
-		gameInstances.delete(this.serverId);
-	}
-
-	async game(message){
-		// send help description upon help command
-		if ((message.toLowerCase()).startsWith(COMMANDS.help)) {
-			this.e.channel.send({embeds: [helpDescriptionEmbed]});
+	async initializeStart(){
+		// startGame() fetches a word with api call,
+		// and makes starting embed and returns the fetched word or "Error" if error occurs
+		this.PICKED_WORD = await startGame(this.e, TOTAL_TRIES);
+		this.PICKED_WORD_DEFINITION = ( await isValid(this.PICKED_WORD) ).definition;
+		this.GUESSED_WORD = this.PICKED_WORD;
+		// stop executing if an error occurs from the api call
+		if (this.PICKED_WORD === "Error") {
+			this.e.reply("Something went wrong! ;-;");
 			return;
 		}
-		// return if neither game hasn't started nor message includes the start command
-		if (!this.hasGameStarted && !message.startsWith(COMMANDS.start)) return;
-		// makes sure the codes are only ran once when game starts
-		if (!this.hasGameStarted) {
-			// startGame()  fetches a word with api call,
-			// and makes starting embed and returns the fetched word or "Error" if error occurs
-			this.PICKED_WORD = await startGame(this.e, TOTAL_TRIES);
-			this.PICKED_WORD_DEFINITION = ( await isValid(this.PICKED_WORD) ).definition;
-			this.GUESSED_WORD = this.PICKED_WORD;
-			// stop executing if an error occurs from the api call
-			if (this.PICKED_WORD === "Error") {
-				this.e.reply("Something went wrong! ;-;");
-				return;
-			}
-			this.hasGameStarted = true;
+		this.hasGameStarted = true;
 
-			this.shutDownTimer = setTimeout(() => {
-				this.shutDown()
-			},timeTillBotTurnsOff);
-		}	
-		// trim() removes any whitespaces from both sides of the message to keep the proper length
-		const userMessage = message.trim().toLowerCase();
+		this.shutDownTimer = setTimeout(() => {
+			this.shutDown()
+		},timeTillBotTurnsOff);
+	}
 
-		// stop the game upon stop command
-		if( userMessage === COMMANDS.end && this.hasGameStarted ){
+
+	initializeEnding(result){
+		
+		if (result === "won") {
+			handleWin(
+				this.e,
+				this.GUESSED_WORD,
+				this.GUESSED_WORD_ARR,
+				this.PICKED_WORD,
+				this.triesLeft,
+				this.PICKED_WORD_DEFINITION
+			);
+		}
+		else{
 			handleLoose(
 				this.e,
 				this.GUESSED_WORD,
@@ -92,8 +73,53 @@ class Wordle {
 				this.triesLeft,
 				this.PICKED_WORD_DEFINITION
 			)
-			this.resetVariables();
-			gameInstances.delete(this.serverId);
+		}
+
+		this.resetVariables();
+		clearTimeout(this.shutDownTimer);
+		gameInstances.delete(this.serverId);
+	}
+	
+
+	resetVariables(){
+		this.PICKED_WORD = undefined;
+		this.hasGameStarted = false;
+		this.triesLeft = TOTAL_TRIES;
+	}
+
+	shutDown(){
+		this.e.channel.send("The game has ended due to inactivity.");
+		this.initializeEnding("lost");
+	}
+
+	resetTimer(){
+		// reset the shut down timer
+		clearTimeout(this.shutDownTimer);
+		this.shutDownTimer = setTimeout(() => {
+			this.shutDown()
+		},timeTillBotTurnsOff);
+	}
+
+	async game(message){
+
+		// send help emded if message includes the help command
+		if (message.startsWith(COMMANDS.help))
+			sendHelpEmbed(this.e.channel);
+
+		// return if neither game hasn't started nor message includes the start command
+		if (!this.hasGameStarted && !message.startsWith(COMMANDS.start)) 
+			return;
+		
+		// makes sure the codes are only ran once when game starts
+		if (!this.hasGameStarted) 
+			await this.initializeStart();
+		
+		// trim() removes any whitespaces from both sides of the message to keep the proper length
+		const userMessage = message.trim().toLowerCase();
+
+		// stop the game upon stop command
+		if( userMessage === COMMANDS.end && this.hasGameStarted ){
+			this.initializeEnding("lost");
 			return;
 		};
 
@@ -108,6 +134,7 @@ class Wordle {
 
 		// remove the prefix from the message thus getting the guessed word
 		this.GUESSED_WORD = userMessage.slice(PREFIX.length);
+		
 		// check validation for user input as in , is it a valid word.
 		// And notify user if not valid
 		let validationResult = await isValid(this.GUESSED_WORD);
@@ -117,35 +144,15 @@ class Wordle {
 			return;
 		}
 
-		this.triesLeft = this.triesLeft - 1;
-
+		this.triesLeft-- ;
+		
 		if( this.GUESSED_WORD === this.PICKED_WORD ){
-			handleWin(
-				this.e,
-				this.GUESSED_WORD,
-				this.GUESSED_WORD_ARR,
-				this.PICKED_WORD,
-				this.triesLeft,
-				this.PICKED_WORD_DEFINITION
-			);
-			this.resetVariables();
-			clearTimeout(this.shutDownTimer);
-			gameInstances.delete(this.serverId);
+			this.initializeEnding("won");
 			return;
 		}
 
 		else if( this.triesLeft === 0 ){
-			handleLoose(
-				this.e,
-				this.GUESSED_WORD,
-				this.GUESSED_WORD_ARR,
-				this.PICKED_WORD,
-				this.triesLeft,
-				this.PICKED_WORD_DEFINITION
-			);
-			this.resetVariables();
-			clearTimeout(this.shutDownTimer);
-			gameInstances.delete(this.serverId);
+			this.initializeEnding("lost");
 			return;
 		}
 
@@ -156,10 +163,8 @@ class Wordle {
 			this.PICKED_WORD,
 			this.triesLeft
 		);
-		clearTimeout(this.shutDownTimer);
-		this.shutDownTimer = setTimeout(() => {
-			this.shutDown()
-		},timeTillBotTurnsOff);
+
+		this.resetTimer()
 	}
 }
 
@@ -170,11 +175,13 @@ client.on("messageCreate", async (e) => {
 	
 	// get the server id
 	const serverId = e.guildId;
-	// check if a game instance already exists for the server
+	// pass the user message if an instance of the game class exists
 	if (gameInstances.has(serverId)) {
 		const existingGameInstance = gameInstances.get(serverId);
 		await existingGameInstance.game(e.content);
-	} else {
+	} 
+	// make new game instace for that server if an  instance doesn't exist
+	else {
 		const newGameInstance = new Wordle(e, serverId);
 		gameInstances.set(serverId, newGameInstance);
 		await newGameInstance.game(e.content);
