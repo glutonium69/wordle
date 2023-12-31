@@ -16,6 +16,7 @@ client.on("ready", () => {
 });
 
 const TOTAL_TRIES = 8;
+// bot turns off automatically after a certain time of inactivity
 const timeTillBotTurnsOff = 10 * (60 * 1000); // minute -> mili-sec
 const gameInstances = new Map();
 
