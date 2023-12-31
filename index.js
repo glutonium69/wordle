@@ -161,7 +161,8 @@ class Wordle {
 			this.e,
 			this.GUESSED_WORD,
 			this.GUESSED_WORD_ARR,
-			this.PICKED_WORD
+			this.PICKED_WORD,
+			this.triesLeft
 		);
 
 		this.resetTimer()
