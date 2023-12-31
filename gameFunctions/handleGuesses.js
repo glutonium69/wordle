@@ -2,7 +2,7 @@ const getCodeBlock = require("../utils/getCodeBlock.js");
 const makeEmbed = require("../utils/makeEmbed.js");
 // matches correct word and guessed word and shows final result
 function handleGuesses(e, guessedWord, guessedWordArr, pickedWord, triesLeft, gameFinished = false){
-
+	// color arr holds the color data for all the letters of the guessed word
 	let colorArr = [];
 	// matches each letter and sets their color in colorArr based of conditions
 	for(let i=0; i<guessedWord.length; i++){
