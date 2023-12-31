@@ -1,7 +1,7 @@
 const colorLetters = require("./colorLetters.js");
 const setCodeBlock = require("./setCodeBlock.js");
 
-function getCodeBlock(word, guessedWordArr, colorArr, triesLeft){
+function getCodeBlock(word, guessedWordArr, colorArr){
 	
 	const COLORED_WORD = colorLetters(word, colorArr);
 	guessedWordArr.push(COLORED_WORD);
