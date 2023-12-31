@@ -13,14 +13,14 @@ function wordAndDefinition(word, definition){
 }
 
 
-function handleWin(e, GUESSED_WORD, PICKED_WORD, triesLeft, PICKED_WORD_DEFINITION){
+function handleWin(e, guessedWord, guessedWordArr, PICKED_WORD, triesLeft, PICKED_WORD_DEFINITION){
 	e.channel.send("Congrats!!");
 	e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
-	handleGuesses(e, GUESSED_WORD, PICKED_WORD, triesLeft, true);
+	handleGuesses(e, guessedWord, guessedWordArr, PICKED_WORD, triesLeft, true);
 }
 
-function handleLoose(e, GUESSED_WORD, PICKED_WORD, triesLeft, PICKED_WORD_DEFINITION){
-	handleGuesses(e, GUESSED_WORD, PICKED_WORD, triesLeft, true);
+function handleLoose(e, guessedWord, guessedWordArr, PICKED_WORD, triesLeft, PICKED_WORD_DEFINITION){
+	handleGuesses(e, guessedWord, guessedWordArr, PICKED_WORD, triesLeft, true);
 	e.channel.send("Better luck next time!");
 	e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
 }

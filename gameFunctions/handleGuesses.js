@@ -1,7 +1,7 @@
 const getCodeBlock = require("../utils/getCodeBlock.js");
 const makeEmbed = require("../utils/makeEmbed.js");
 // matches correct word and guessed word and shows final result
-function handleGuesses(e, guessedWord, pickedWord, triesLeft, gameFinished = false){
+function handleGuesses(e, guessedWord, guessedWordArr, pickedWord, triesLeft, gameFinished = false){
 
 	let colorArr = [];
 	// matches each letter and sets their color in colorArr based of conditions
@@ -20,7 +20,7 @@ function handleGuesses(e, guessedWord, pickedWord, triesLeft, gameFinished = fal
 		}
 	}
 
-	const CODE_BLOCK = getCodeBlock(guessedWord , colorArr, triesLeft, gameFinished);
+	const CODE_BLOCK = getCodeBlock(guessedWord , guessedWordArr, colorArr, triesLeft, gameFinished);
 	const EMBED = makeEmbed(CODE_BLOCK, triesLeft);
 	e.channel.send({embeds: [EMBED]});
 	
