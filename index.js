@@ -147,15 +147,11 @@ class Wordle {
 		if(this.e.channelId !== channelId)
 			return;
 
-		// trim() removes all the white spaces from the beginning and the end keeping the end
-		userMessage = (userMessage.trim()).toLowerCase();
-		// send help emded if userMessage includes the help command
-		if (userMessage === COMMANDS.help)
-			sendHelpEmbed(this.e.channel);
-
 		// return if neither game hasn't started nor userMessage includes the start command
-		if (!this.hasGameStarted && userMessage !== COMMANDS.start) 
+		if (!this.hasGameStarted && userMessage !== COMMANDS.start){
+			gameInstances.delete(this.serverId);
 			return;
+		}
 		
 		// makes sure the codes are only ran once when game starts
 		if (!this.hasGameStarted && userMessage === COMMANDS.start) 
@@ -223,6 +219,14 @@ client.on("messageCreate", async (e) => {
 	// 	e.reply("Bot is temporarily off for maintenance.");
 	// 	return;
 	// }
+
+	
+	// trim() removes all the white spaces from the beginning and the end keeping the end
+	const userMessage = (e.content.trim()).toLowerCase()
+	// send help emded if userMessage includes the help command
+	if (userMessage === COMMANDS.help)
+		sendHelpEmbed(this.e.channel);
+
 	
 	
 	// get the server id
@@ -230,13 +234,13 @@ client.on("messageCreate", async (e) => {
 	// pass the user message if an instance of the game class exists
 	if (gameInstances.has(serverId)) {
 		const existingGameInstance = gameInstances.get(serverId);
-		await existingGameInstance.game(e.content, e.channelId);
+		await existingGameInstance.game(userMessage, e.channelId);
 	} 
 	// make new game instace for that server if an  instance doesn't exist
 	else {
 		const newGameInstance = new Wordle(e, serverId);
 		gameInstances.set(serverId, newGameInstance);
-		await newGameInstance.game(e.content, e.channelId);
+		await newGameInstance.game(userMessage, e.channelId);
 	}
 });
 
