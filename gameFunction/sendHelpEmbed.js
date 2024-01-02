@@ -1,5 +1,5 @@
 const { PREFIX } = require("../utils/prefix&command");
-const Discord = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 // this is written in md since discord allows md
 const helpDescription = `
 # PREFIX = "\`${PREFIX}\`"
@@ -32,11 +32,15 @@ const helpDescription = `
 `;
 
 
-const helpDescriptionEmbed = new Discord.EmbedBuilder()
+const helpEmbed = new EmbedBuilder()
 	.setTitle("Wordle Bot Help")
 	.setDescription(helpDescription)
 	.setColor("#03b1fc")
 	.setFooter({text: "Good luck and have fun playing!"})
-	
 
-module.exports =  helpDescriptionEmbed;
+
+function sendHelpEmbed(channel){
+	channel.send({embeds: [helpEmbed]});
+}
+
+module.exports =  sendHelpEmbed;
