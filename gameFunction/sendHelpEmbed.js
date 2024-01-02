@@ -8,7 +8,7 @@ const helpDescription = `
 ## __Commands__
 
 - To start a new game, type: \` ${PREFIX}wordle \`.
-    - This command will only work once a game ends.
+    	- This command will only work once a game ends.
 
 - To make a guess, type: \` ${PREFIX}<your guess> \`.
 	- The prefix needed to distinguish between normal text and guesses.
