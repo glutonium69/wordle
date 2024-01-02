@@ -8,7 +8,7 @@ const helpDescription = `
 ## __Commands__
 
 - To start a new game, type: \` ${PREFIX}wordle \`.
-    	- This command will only work once a game ends.
+    - This command will only work once a game ends.
 
 - To make a guess, type: \` ${PREFIX}<your guess> \`.
 	- The prefix needed to distinguish between normal text and guesses.
@@ -18,17 +18,13 @@ const helpDescription = `
 
 ## __Color definitions__
 
-### PC
-> Each guess will be color-coded if your guess is valid:
+> Letters of each guessed word will be in a color-coded tile if your guess is valid:
 
-- :green_circle: Green letters indicate a correct letter in the correct position.
-- :yellow_circle: Yellow letters indicate a correct letter but in the wrong position.
-- :white_circle: White letters indicate an incorrect letter
+> If not a valid word then the bot will notify
 
-### Mobile
-> Color-coding (ANSI) doesn't work for mobile hence color coding isn't available for mobile.
-
-> Mobile compatible feature will be added soon.
+- :green_square: Green tiles indicate a correct letter in the correct position.
+- :yellow_square: Yellow tiles indicate a correct letter but in the wrong position.
+- :white_large_square: White tiles indicate an incorrect letter
 `;
 
 
