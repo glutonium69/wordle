@@ -175,7 +175,6 @@ class Wordle {
 
 		// remove the prefix from the userMessage thus getting the guessed word
 		this.GUESSED_WORD = userMessage.slice(PREFIX.length);
-		this.GUESSED_WORD_ARR.push(this.GUESSED_WORD);
 		// check validation for user input as in , is it a valid word.
 		// And notify user if not valid
 		let validationResult = await isValid(this.GUESSED_WORD);
@@ -185,6 +184,7 @@ class Wordle {
 			return;
 		}
 
+		this.GUESSED_WORD_ARR.push(this.GUESSED_WORD);
 		this.triesLeft-- ;
 		
 		if( this.GUESSED_WORD === this.PICKED_WORD ){
