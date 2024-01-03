@@ -141,7 +141,7 @@ class Wordle {
 		},timeTillBotTurnsOff);
 	}
 
-	async game(userMessage, channelId){
+	async game(e, userMessage, channelId){
 
 		// makes sure bot doesn't send nor take command from different channel
 		if(this.e.channelId !== channelId)
@@ -180,7 +180,7 @@ class Wordle {
 		let validationResult = await isValid(this.GUESSED_WORD);
 
 		if (!validationResult.valid) {
-			this.e.reply("Invalid word! Try again!");
+			e.reply("Invalid word! Try again!");
 			return;
 		}
 
@@ -234,13 +234,13 @@ client.on("messageCreate", async (e) => {
 	// pass the user message if an instance of the game class exists
 	if (gameInstances.has(serverId)) {
 		const existingGameInstance = gameInstances.get(serverId);
-		await existingGameInstance.game(userMessage, e.channelId);
+		await existingGameInstance.game(e, userMessage, e.channelId);
 	} 
 	// make new game instace for that server if an  instance doesn't exist
 	else {
 		const newGameInstance = new Wordle(e, serverId);
 		gameInstances.set(serverId, newGameInstance);
-		await newGameInstance.game(userMessage, e.channelId);
+		await newGameInstance.game(e, userMessage, e.channelId);
 	}
 });
 
