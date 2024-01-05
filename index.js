@@ -1,15 +1,15 @@
-const Discord = require("discord.js");
+import Discord from "discord.js";
 const client = new Discord.Client({
 	intents: ["Guilds", "GuildMessages", "MessageContent"],
 });
 
-const listen = require("./server.js");
-const { COMMANDS, PREFIX } = require("./utils/prefix&command.js");
-const handleGuesses = require("./gameFunctions/handleGuesses.js");
-const { handleWin, handleLoose } = require("./gameFunctions/handleWinOrLose.js");
-const sendHelpEmbed = require("./gameFunctions/sendHelpEmbed.js");
-const setGame = require("./gameFunctions/setGame.js");
-const isValid = require("./api/isValid.js");
+import listen from "./server.js";
+import { COMMANDS, PREFIX } from "./utils/prefix&command.js";
+import handleGuesses from "./gameFunction/handleGuesses.js";
+import { handleWin, handleLoose } from "./gameFunction/handleWinOrLose.js";
+import sendHelpEmbed from "./gameFunction/sendHelpEmbed.js";
+import setGame from "./gameFunction/setGame.js";
+import isValid from "./api/isValid.js";
 
 
 client.on("ready", () => {
@@ -245,5 +245,5 @@ client.on("messageCreate", async (e) => {
 });
 
 listen();
-const logIn = process.env["TOKEN"];
-client.login(logIn);
+// const logIn = process.env["TOKEN"];
+client.login("MTE5MDc5NTg4NDM4OTIxNjI5Ng.GiiwQq.K0VAhS1ocwoZ6Dijiy5acVYhvdpZNoJX52GGcU");

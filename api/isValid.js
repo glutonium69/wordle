@@ -1,4 +1,4 @@
-async function isValid(word){
+export default async function isValid(word){
 	try{
 		const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
 		const data = await res.json();
@@ -20,5 +20,3 @@ async function isValid(word){
 		return false;
 	}
 }
-
-module.exports = isValid;

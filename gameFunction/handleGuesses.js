@@ -1,9 +1,9 @@
-const canvas = require("../utils/canvas.js");
+import canvas from "../utils/canvas.js";
 
-const { AttachmentBuilder } = require("discord.js");
+import { AttachmentBuilder } from "discord.js";
 
 // matches correct word and guessed word and shows final result
-function handleGuesses(e, guessedWordArr,letterStateArr, pickedWord, triesLeft){
+export default function handleGuesses(e, guessedWordArr,letterStateArr, pickedWord, triesLeft){
 	
 	// matches each letter and sets their color in colorArr based of conditions
 	for(let i=0; i<guessedWordArr.length; i++){
@@ -36,5 +36,3 @@ function handleGuesses(e, guessedWordArr,letterStateArr, pickedWord, triesLeft){
 
 	e.channel.send({ files: [file] });
 }
-
-module.exports = handleGuesses;
