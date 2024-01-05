@@ -1,6 +1,6 @@
-const fetchWord = require("../api/fetchWord.js");
-const isValid = require("../api/isValid.js");
-const handleGuesses = require("./handleGuesses.js");
+import fetchWord from "../api/fetchWord.js";
+import isValid from "../api/isValid.js";
+import handleGuesses from "./handleGuesses.js";
 
 async function getWord(){
 	
@@ -23,8 +23,7 @@ async function getWord(){
 	return word;
 }
 
-
-async function setGame(e, guessedWordArr, letterStateArr, triesLeft){
+export default async function setGame(e, guessedWordArr, letterStateArr, triesLeft){
 	e.reply("Starting game...");
 	
 	const PICKED_WORD = await getWord();
@@ -40,5 +39,3 @@ async function setGame(e, guessedWordArr, letterStateArr, triesLeft){
 	
 	return PICKED_WORD.toLowerCase();
 }
-
-module.exports = setGame;

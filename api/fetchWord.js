@@ -1,4 +1,4 @@
-async function fetchWord(){
+export default async function fetchWord(){
 	try{
 		const URL = "https://random-word-api.herokuapp.com/word?length=5";
 		const res = await fetch(URL)
@@ -10,5 +10,3 @@ async function fetchWord(){
 		return "Error";
 	}
 }
-
-module.exports = fetchWord;

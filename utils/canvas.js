@@ -1,6 +1,6 @@
-const { createCanvas } = require("canvas");
+import { createCanvas } from "canvas";
 
-function canvas(totalColumns, totalRows, guessedWordArr, letterStateArr, triesLeft){
+export default function canvas(totalColumns, totalRows, guessedWordArr, letterStateArr, triesLeft){
 
 	const triesLeftHeight = 40;
 	const boardWidth = 300;
@@ -135,5 +135,3 @@ function setLetters(ctx, totalRows, totalColumns, tileWidth, gap, guessedWordArr
 		}
 	}
 }
-
-module.exports = canvas;
