@@ -17,9 +17,19 @@ client.on("ready", () => {
 });
 
 const TOTAL_TRIES = 8;
+const WORD_LENGTH = 5;
 const timeTillBotTurnsOff = 10 * (60 * 1000); // minute -> mili-sec
 const gameInstances = new Map();
 
+function setLetterStateArr(){
+
+	const array = new Array(TOTAL_TRIES);
+	
+	for(let i = 0; i < TOTAL_TRIES; i++){
+		array[i] = new Array(WORD_LENGTH);
+	}
+	return array;
+}
 
 /*
 	guessedWordsArr = [
@@ -64,7 +74,7 @@ class Wordle {
 		this.PICKED_WORD_DEFINITION = undefined;
 		this.GUESSED_WORD = undefined;
 		this.GUESSED_WORD_ARR = [];
-		this.LETTER_STATE_ARR = [[],[],[],[],[],[],[],[]];
+		this.LETTER_STATE_ARR = setLetterStateArr(); // this returns an array like [ [],[],[],[],[],[]..... ]
 		this.shutDownTimer = undefined;
 		this.triesLeft = TOTAL_TRIES;
 	}
@@ -74,6 +84,7 @@ class Wordle {
 		// startGame() fetches a word with api call,
 		// and makes starting embed and returns the fetched word or "Error" if error occurs
 		this.PICKED_WORD = await setGame(
+			WORD_LENGTH,
 			this.e,
 			this.GUESSED_WORD_ARR,
 			this.LETTER_STATE_ARR,
@@ -141,11 +152,12 @@ class Wordle {
 		},timeTillBotTurnsOff);
 	}
 
-	async game(userMessage, channelId){
+	async game(e, userMessage, channelId){
 
 		// makes sure bot doesn't send nor take command from different channel
-		if(this.e.channelId !== channelId)
+		if(this.e.channelId !== channelId){
 			return;
+		}
 
 		// return if neither game hasn't started nor userMessage includes the start command
 		if (!this.hasGameStarted && userMessage !== COMMANDS.start){
@@ -166,22 +178,39 @@ class Wordle {
 
 		// early return if the userMessage is the start command itself
 		// or if either userMessage didnt start with the prefix
-		// or the total length of the userMessage is not 6 ( 5 letters + the prefix )
 		if (
 			userMessage === COMMANDS.start ||
-			!userMessage.startsWith(PREFIX) ||
-			userMessage.length !== 6
+			!userMessage.startsWith(PREFIX)
 		)return;
 
 		// remove the prefix from the userMessage thus getting the guessed word
 		this.GUESSED_WORD = userMessage.slice(PREFIX.length);
+
+		// notify user if the guessed word isn't of the correct length
+		if(this.GUESSED_WORD.length !== WORD_LENGTH){
+			e.reply(`Guessed words must be ${WORD_LENGTH} letters`).then(msg => {
+				setTimeout(() => {
+					msg.delete();
+				}, 5000);
+			})
+			return;
+		}
+			
 		// check validation for user input as in , is it a valid word.
 		// And notify user if not valid
 		let validationResult = await isValid(this.GUESSED_WORD);
 
 		if (!validationResult.valid) {
-			this.e.reply("Invalid word! Try again!");
-			return;
+			// e.react("❌");
+			e.reply("Invalid word! Try again!")
+				.then((reply) => {
+					// Delete the message and the reply after a certain time
+					setTimeout(() => {
+						e.delete();
+						reply.delete();
+					}, 5000);
+				});
+		    return;
 		}
 
 		this.GUESSED_WORD_ARR.push(this.GUESSED_WORD);
@@ -214,33 +243,30 @@ client.on("messageCreate", async (e) => {
 
 	if(e.author.bot) return;
 
-
 	// if(e.content.startsWith(COMMANDS.start)){ 
 	// 	e.reply("Bot is temporarily off for maintenance.");
 	// 	return;
 	// }
 
-	
 	// trim() removes all the white spaces from the beginning and the end keeping the end
 	const userMessage = (e.content.trim()).toLowerCase()
 	// send help emded if userMessage includes the help command
 	if (userMessage === COMMANDS.help)
-		sendHelpEmbed(this.e.channel);
+		sendHelpEmbed(e.channel);
 
-	
 	
 	// get the server id
 	const serverId = e.guildId;
 	// pass the user message if an instance of the game class exists
 	if (gameInstances.has(serverId)) {
 		const existingGameInstance = gameInstances.get(serverId);
-		await existingGameInstance.game(userMessage, e.channelId);
+		await existingGameInstance.game(e, userMessage, e.channelId);
 	} 
 	// make new game instace for that server if an  instance doesn't exist
 	else {
 		const newGameInstance = new Wordle(e, serverId);
 		gameInstances.set(serverId, newGameInstance);
-		await newGameInstance.game(userMessage, e.channelId);
+		await newGameInstance.game(e, userMessage, e.channelId);
 	}
 });
 
