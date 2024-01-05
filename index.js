@@ -84,7 +84,6 @@ class Wordle {
 		// startGame() fetches a word with api call,
 		// and makes starting embed and returns the fetched word or "Error" if error occurs
 		this.PICKED_WORD = await setGame(
-			WORD_LENGTH,
 			this.e,
 			this.GUESSED_WORD_ARR,
 			this.LETTER_STATE_ARR,
