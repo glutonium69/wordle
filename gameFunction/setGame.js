@@ -2,7 +2,7 @@ import fetchWord from "../api/fetchWord.js";
 import isValid from "../api/isValid.js";
 import handleGuesses from "./handleGuesses.js";
 
-async function getWord(){
+async function getWord(wordLength){
 	
 	let word = "";
 	let attempts = 0;
@@ -12,7 +12,7 @@ async function getWord(){
 	// the loop makes sure that the word returned the fetcWord() is valid according to isValid()
 	// so later we can always show a definition for that word
 	do{
-		word = await fetchWord();
+		word = await fetchWord(wordLength);
 		attempts++;
 
 		if(attempts >= maxAttempts){
@@ -23,10 +23,10 @@ async function getWord(){
 	return word;
 }
 
-export default async function setGame(e, guessedWordArr, letterStateArr, triesLeft){
+export default async function setGame(e, guessedWordArr, letterStateArr, triesLeft, wordLength){
 	e.reply("Starting game...");
 	
-	const PICKED_WORD = await getWord();
+	const PICKED_WORD = await getWord(wordLength);
 	if(PICKED_WORD === "Error") return PICKED_WORD;
 	
 	handleGuesses(

@@ -16,17 +16,30 @@ client.on("ready", () => {
 	console.log("Bot is online with the username: " + client.user.tag);
 });
 
-const TOTAL_TRIES = 8;
-const WORD_LENGTH = 5;
+const TOTAL_TRIES_DEFAULT = 7;
+const WORD_LENGTH_DEFAULT = 5;
 const timeTillBotTurnsOff = 10 * (60 * 1000); // minute -> mili-sec
 const gameInstances = new Map();
 
-function setLetterStateArr(){
+const optionalParams = {
+	wordLength: {
+		min: 4,
+		max: 8
+	},
+	totalTries: {
+		min: 3,
+		max: 12
+	}
+}
 
-	const array = new Array(TOTAL_TRIES);
+
+// this returns an array like [ [],[],[],[],[],[]..... ]
+function setLetterStateArr(totalTries, wordLength){
+
+	const array = new Array(totalTries);
 	
-	for(let i = 0; i < TOTAL_TRIES; i++){
-		array[i] = new Array(WORD_LENGTH);
+	for(let i = 0; i < totalTries; i++){
+		array[i] = new Array(wordLength);
 	}
 	return array;
 }
@@ -73,10 +86,11 @@ class Wordle {
 		this.PICKED_WORD = undefined;
 		this.PICKED_WORD_DEFINITION = undefined;
 		this.GUESSED_WORD = undefined;
+		this.WORD_LENGTH = WORD_LENGTH_DEFAULT;
+		this.triesLeft = TOTAL_TRIES_DEFAULT;
 		this.GUESSED_WORD_ARR = [];
-		this.LETTER_STATE_ARR = setLetterStateArr(); // this returns an array like [ [],[],[],[],[],[]..... ]
+		this.LETTER_STATE_ARR = setLetterStateArr(TOTAL_TRIES_DEFAULT, WORD_LENGTH_DEFAULT); 
 		this.shutDownTimer = undefined;
-		this.triesLeft = TOTAL_TRIES;
 	}
 
 	async initializeStart(){
@@ -84,11 +98,11 @@ class Wordle {
 		// startGame() fetches a word with api call,
 		// and makes starting embed and returns the fetched word or "Error" if error occurs
 		this.PICKED_WORD = await setGame(
-			WORD_LENGTH,
 			this.e,
 			this.GUESSED_WORD_ARR,
 			this.LETTER_STATE_ARR,
-			this.triesLeft
+			this.triesLeft,
+			this.WORD_LENGTH
 		);
 		
 		this.PICKED_WORD_DEFINITION = ( await isValid(this.PICKED_WORD) ).definition;
@@ -136,7 +150,7 @@ class Wordle {
 	resetVariables(){
 		this.PICKED_WORD = undefined;
 		this.hasGameStarted = false;
-		this.triesLeft = TOTAL_TRIES;
+		this.triesLeft = TOTAL_TRIES_DEFAULT;
 	}
 
 	shutDown(){
@@ -160,15 +174,45 @@ class Wordle {
 		}
 
 		// return if neither game hasn't started nor userMessage includes the start command
-		if (!this.hasGameStarted && userMessage !== COMMANDS.start){
+		if (!this.hasGameStarted && !userMessage.startsWith(COMMANDS.start)){
 			gameInstances.delete(this.serverId);
 			return;
 		}
 		
 		// makes sure the codes are only ran once when game starts
-		if (!this.hasGameStarted && userMessage === COMMANDS.start) 
+		if (!this.hasGameStarted && userMessage.startsWith(COMMANDS.start)){
+			
+			// check if optional parameters are given [ word length and total tries ]
+			// optional params are given as such "COMMAD.start [word_length, total_tries]"
+			const pattern = /\.wordle\s*\[(\d+)\s*,\s*(\d+)\]/;
+			const match = pattern.exec(userMessage)
+			
+			if (!match){
+				await this.initializeStart();
+				return;
+			}
+			
+			const wordLength = parseInt(match[1], 10);
+			const totalTries = parseInt(match[2], 10);
+			
+			if (
+				(wordLength >= optionalParams.wordLength.min &&
+				wordLength <= optionalParams.wordLength.max) &&
+				(totalTries >= optionalParams.totalTries.min &&
+				totalTries <= optionalParams.totalTries.max)
+			){
+				this.WORD_LENGTH = wordLength;
+				this.triesLeft = totalTries;
+				this.LETTER_STATE_ARR = setLetterStateArr(this.triesLeft, this.WORD_LENGTH);
+			}
+			else{
+				this.e.reply(`Invalid parameters. Please use \`${COMMANDS.help}\` for more info.`);
+				gameInstances.delete(this.serverId);
+				return;
+			}
+			
 			await this.initializeStart();
-
+		}
 		
 		// stop the game upon stop command
 		if (this.hasGameStarted && userMessage === COMMANDS.end){
@@ -179,7 +223,7 @@ class Wordle {
 		// early return if the userMessage is the start command itself
 		// or if either userMessage didnt start with the prefix
 		if (
-			userMessage === COMMANDS.start ||
+			userMessage.startsWith(COMMANDS.start) ||
 			!userMessage.startsWith(PREFIX)
 		)return;
 
@@ -187,8 +231,8 @@ class Wordle {
 		this.GUESSED_WORD = userMessage.slice(PREFIX.length);
 
 		// notify user if the guessed word isn't of the correct length
-		if(this.GUESSED_WORD.length !== WORD_LENGTH){
-			e.reply(`Guessed words must be ${WORD_LENGTH} letters`).then(msg => {
+		if(this.GUESSED_WORD.length !== this.WORD_LENGTH){
+			e.reply(`Guessed words must be ${this.WORD_LENGTH} letters`).then(msg => {
 				setTimeout(() => {
 					msg.delete();
 				}, 5000);
@@ -210,7 +254,7 @@ class Wordle {
 						reply.delete();
 					}, 5000);
 				});
-		    return;
+			return;
 		}
 
 		this.GUESSED_WORD_ARR.push(this.GUESSED_WORD);
@@ -251,8 +295,10 @@ client.on("messageCreate", async (e) => {
 	// trim() removes all the white spaces from the beginning and the end keeping the end
 	const userMessage = (e.content.trim()).toLowerCase()
 	// send help emded if userMessage includes the help command
-	if (userMessage === COMMANDS.help)
+	if (userMessage === COMMANDS.help){
 		sendHelpEmbed(e.channel);
+		return;
+	}
 
 	
 	// get the server id

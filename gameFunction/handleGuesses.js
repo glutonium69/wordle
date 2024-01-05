@@ -30,7 +30,13 @@ export default function handleGuesses(e, guessedWordArr,letterStateArr, pickedWo
 		}
 	}
 
-	const buffer = canvas(5, 8, guessedWordArr, letterStateArr, triesLeft);
+	const buffer = canvas(
+    pickedWord.length,
+    letterStateArr.length,
+    guessedWordArr,
+    letterStateArr,
+    triesLeft
+  );
 	
 	const file = new AttachmentBuilder(buffer, './test.png');
 
