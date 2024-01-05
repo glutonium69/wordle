@@ -250,8 +250,10 @@ client.on("messageCreate", async (e) => {
 	// trim() removes all the white spaces from the beginning and the end keeping the end
 	const userMessage = (e.content.trim()).toLowerCase()
 	// send help emded if userMessage includes the help command
-	if (userMessage === COMMANDS.help)
+	if (userMessage === COMMANDS.help){
 		sendHelpEmbed(e.channel);
+    return;
+  }
 
 	
 	// get the server id
