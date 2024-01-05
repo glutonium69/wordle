@@ -245,5 +245,5 @@ client.on("messageCreate", async (e) => {
 });
 
 listen();
-// const logIn = process.env["TOKEN"];
-client.login("MTE5MDc5NTg4NDM4OTIxNjI5Ng.GiiwQq.K0VAhS1ocwoZ6Dijiy5acVYhvdpZNoJX52GGcU");
+const logIn = process.env["TOKEN"];
+client.login(logIn);
