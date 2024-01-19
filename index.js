@@ -1,4 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
+import dotenv from "dotenv";
+
 const client = new Client({
 	intents: ["Guilds", "GuildMessages", "MessageContent", GatewayIntentBits.Guilds],
 });
@@ -77,5 +79,7 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 listen();
-const logIn = process.env["TOKEN"];
-client.login(logIn);
+
+dotenv.config();
+const TOKEN = process.env["TOKEN"];
+client.login(TOKEN);
