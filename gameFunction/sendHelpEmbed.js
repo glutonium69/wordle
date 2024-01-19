@@ -44,6 +44,6 @@ const helpEmbed = new EmbedBuilder()
 	.setFooter({text: "Good luck and have fun playing!"})
 
 
-export default function sendHelpEmbed(channel){
-	channel.send({embeds: [helpEmbed]});
+export default function sendHelpEmbed(e){
+	e.reply({embeds: [helpEmbed]});
 }

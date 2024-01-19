@@ -12,7 +12,7 @@ function wordAndDefinition(word, definition){
 }
 
 export function handleWin(e, guessedWordArr, letterStateArr, PICKED_WORD, triesLeft, PICKED_WORD_DEFINITION){
-	e.channel.send("Congrats!!");
+	e.reply("Congrats!!");
 	e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
 	handleGuesses(
 		e,
@@ -31,6 +31,6 @@ export function handleLoose(e, guessedWordArr, letterStateArr, PICKED_WORD, trie
 		PICKED_WORD,
 		triesLeft
 	);
-	e.channel.send("Better luck next time!");
+	e.reply("Better luck next time!");
 	e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
 }
