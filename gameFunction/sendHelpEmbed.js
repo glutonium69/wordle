@@ -3,7 +3,7 @@ import { EmbedBuilder } from "discord.js";
 // this is written in md since discord allows md
 const helpDescription = `
 # PREFIX = "\`${PREFIX}\`"
-> Welcome to the Wordle Bot! Here are the commands you can use:
+> Welcome to the Wordle Bot! Here are the info you need:
 
 
 ## __About__
@@ -44,6 +44,6 @@ const helpEmbed = new EmbedBuilder()
 	.setFooter({text: "Good luck and have fun playing!"})
 
 
-export default function sendHelpEmbed(channel){
-	channel.send({embeds: [helpEmbed]});
+export default function sendHelpEmbed(e){
+	e.reply({embeds: [helpEmbed]});
 }

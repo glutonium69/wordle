@@ -1,5 +1,5 @@
 # PREFIX = "`.`"
-> Welcome to the Wordle Bot! Here are the commands you can use:
+> Welcome to the Wordle Bot! Here are the info you need:
 
 ## __About__
 Wordle is a word game where a random word of a certain length is picked and the player has to guess that word within a specific amount of tries. With each guess, if the guessed word is valid (as in if it is a legitamate word according to the dictionary) the word shows up in the board and letters are shown in different colors where each color gives a hint about that letter (check color definition section to learn more about these colors). The player based on those hints and with the power of their volabulary, are to guess the correct word.
