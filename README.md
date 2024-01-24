@@ -1,43 +1,43 @@
 # Table of contents
 
-Wordle bot
+* [Wordle bot](#wordle-bot)
 
-* [Introduction](#introduction)
+    * [Introduction](#introduction)
+    
+    * [How to play](#how-to-play)
+        * [Slash Command](#slash-command)
+        * [Prefix Command](#prefix-command)
+        * [Color Definition](#color-definitions)
+    
+    * [Color definitions](#color-definitions)
 
-* [How to play](#how-to-play)
-    * [Slash Command](#slash-command)
-    * [Prefix Command](#prefix-command)
-    * [Color Definition](#color-definitions)
+* [Code Explanation](#code-explanation)
 
-* [Color definitions](#color-definitions)
-
-Code Explanation
-
-* api /
-    * [fetchWord.js](#fetchWordjs)
-    * [isValid.js](#isValidjs)
-
-* gameFunction /
-    * [handleGuesses.js](#handleGuessesjs)
-    * [handleWinOrLose.js](#handleWinOrLosejs)
-    * [sendHelpEmbed.js](#sendHelpEmbedjs)
-    * [setGame.js](#setGamejs)
-
-* slashCommands /
-    * [commands.js](#commandsjs)
-
-* utils /
-    * [canvas.js](#canvasjs)
-    * [prefix&command.js](#prefix&commandjs)
-
-* [gameClass.js](#gameClassjs)
-* [index.js](#indexjs)
-* [registerSlash.js](#registerSlashjs)
-* [server.js](#serverjs)
-
+    * [api /](#api-)
+        * [fetchWord.js](#fetchWordjs)
+        * [isValid.js](#isValidjs)
+    
+    * [gameFunction /](#gameFunction-)
+        * [handleGuesses.js](#handleGuessesjs)
+        * [handleWinOrLose.js](#handleWinOrLosejs)
+        * [sendHelpEmbed.js](#sendHelpEmbedjs)
+        * [setGame.js](#setGamejs)
+    
+    * [slashCommand /](#slashCommand-)
+        * [commands.js](#commandsjs)
+    
+    * [utils /](#utils-)
+        * [canvas.js](#canvasjs)
+        * [prefix&command.js](#prefix&commandjs)
+    
+    * [gameClass.js](#gameClassjs)
+    * [index.js](#indexjs)
+    * [registerSlash.js](#registerSlashjs)
+    * [server.js](#serverjs)
+    
 
 # Wordle bot
-> Welcome to the Wordle Bot! Here you will find all the info about the bot you need.
+Welcome to the Wordle Bot! Here you will find all the info about the bot you need.
 
 
 ## Introduction
@@ -46,29 +46,33 @@ Wordle is a word game where a random word of a certain length is picked and the 
 ## How to play
 
 ### Slash Command
-* In the chatbox, type "/" and from there you can click the bot icon from the bot list on the left and click on the command you want to execute. If exists, optional parameters would show up when clicking a command, you can click on them and fill them as required if you need so.
+In the chatbox, type `"/"` and from there you can click the bot icon from the bot list on the left and click on the command you want to execute. If exists, optional parameters would show up when clicking a command, you can click on them and fill them as required if you need so.
 
 ### Prefix Command
-* To start a new game, type: ` .wordle `.
-  * This command will only work once a game ends.
-  * **_Optional Parameters_**
-    * You can give optional parameters alongside the start command
-    * The way to give those parameters are as follows ` .wordle [parameter-1, parameter-2] `
-      * **Parameter-1** : Length of the word ` [4 <= value <= 8] `
-      * **Parameter-2** : Total amount of tries ` [3 <= value <= 12] `
 
-* To make a guess, type: ` .<your guess> `.
-	* The prefix needed to distinguish between normal text and guesses.
+**Starting game: ` .wordle `**
 
+This command will only work once there are no ongoing games.
 
-* To end the game, type: ` .end `
-	* This command can be used to end the game at any point when a game is on going.
+You can give optional parameters alongside the start command
+
+The way to give those parameters are as follows ` .wordle [parameter-1, parameter-2] `
+* Parameter-1 : Length of the word ` [4 <= value <= 8] `
+* Parameter-2 : Total amount of tries ` [3 <= value <= 12] `
+
+**Guessing word: ` .<your guess> `**
+
+The prefix needed to distinguish between normal text and guesses.
+
+**Ending game: ` .end `**
+
+This command can be used to end the game at any point when a game is on going.
 
 ### Color definitions
 
-> Letters of each guessed word will be in a color-coded tile if your guess is valid:
+Letters of each guessed word will be in a color-coded tile if your guess is valid:
 
-> If not a valid word then the bot will notify
+If not a valid word then the bot will notify
 
 * :green_square: Green tiles indicate a correct letter in the correct position.
 * :yellow_square: Yellow tiles indicate a correct letter but in the wrong position.
@@ -106,7 +110,7 @@ The project as of now has the following folder/file tree (ordered alphabetically
 
 ```
 
-Let's take a look a brief look at what each of those files are responsible for.
+Let's take a brief look at what each of those files are responsible for.
 
 
 ## api /
@@ -159,7 +163,7 @@ loops through `guessedWordArr` and based on different conditions updates `letter
 "incorrect_letter"
 "incorrect_position"
 ```
-Afterwards required properties are passed to [**canvas.js**](#canvas.js) which returns a `buffer` of the generated `canvas` [**read** [**canvas.js**](#canvas.js)]. The buffer is then passed into the `Discord.AttachmentBuilder()`, which then does it's magic and then the `attachment` is sent to discord with the help of `e :object` variable.
+Afterwards required properties are passed to [**canvas.js**](#canvasjs) which returns a `buffer` of the generated `canvas` [**read** [**canvas.js**](#canvasjs)]. The buffer is then passed into the `Discord.AttachmentBuilder()`, which then does it's magic and then the `attachment` is sent to discord with the help of `e :object` variable.
 
 
 ### handleWinOrLose.js
@@ -208,7 +212,7 @@ This function takes two `string` as argument as shown above and concatenates the
 
 **handleWin() & handleLose()**
 
-These functions take the same properties shown above as argument and passes them to [**handleGuesses.js**](#handleGuesses.js) and also sends a message to the player regarding their win or loose.
+These functions take the same properties shown above as argument and passes them to [**handleGuesses.js**](#handleGuessesjs) and also sends a message to the player regarding their win or loose.
 
 ![win](https://cdn.discordapp.com/attachments/1053037836045127761/1199517556474658877/Screenshot_2024-01-24_6.54.12_AM.png?ex=65c2d4c7&is=65b05fc7&hm=b58fad5d5fb818a48c6f2e5a83c9e3352aeabf6c406250778abb9f97b0e6934d&)
 
@@ -236,11 +240,11 @@ setGame(
 
 **getWord()**
 
-This function uses `fetchWord()` and `isValid()` helper function from [**fetchWord.js**](#fetchWord.js) and [**isValid.js**](#isValid.js) respectively. Using a `while` loop, per iteration, it fetches a new word ([**fetchWord.js**](#fetchWord.js)) and checks it validation ([**isValid.js**](#isValid.js)). All though [**fetchWord.js**](#fetchWord.js) returns valid english word, sometimes it turns out invalid according to [**isValid.js**](#isValid.js) as most likely the the word doesn't exists within it's database. To prevent infinte loop there is a max attempts used as a base case.
+This function uses `fetchWord()` and `isValid()` helper function from [**fetchWord.js**](#fetchWordjs) and [**isValid.js**](#isValidjs) respectively. Using a `while` loop, per iteration, it fetches a new word ([**fetchWord.js**](#fetchWordjs)) and checks it validation ([**isValid.js**](#isValidjs)). All though [**fetchWord.js**](#fetchWordjs) returns valid english word, sometimes it turns out invalid according to [**isValid.js**](#isValidjs) as most likely the the word doesn't exists within it's database. To prevent infinte loop there is a max attempts used as a base case.
 
 **setGame()**
 
-This function only runs once the game has started. This intializes the game by setting some variables such as `pickedWord` which is the random word returned by [**fetchWord.js**](#fetchWord.js) and validated by [**isValid.js**](#isValid.js) and setsup and empty board.
+This function only runs once the game has started. This intializes the game by setting some variables such as `pickedWord` which is the random word returned by [**fetchWord.js**](#fetchWordjs) and validated by [**isValid.js**](#isValidjs) and setsup and empty board.
 
 ![sample generated image](https://cdn.discordapp.com/attachments/1053037836045127761/1199515214152999083/file.jpg?ex=65c2d298&is=65b05d98&hm=8bb43450f08b3d14d8313d8bee49f17712fe7f41492ecf727a63bbcb92d208b4&)
 
@@ -258,7 +262,7 @@ const object = {
 	description: 'Command description'
 }
 ```
-The file exports an `array` of all `slash command` `object` which is then used within [**registerSlash.js**](#registerSlash.js).
+The file exports an `array` of all `slash command` `object` which is then used within [**registerSlash.js**](#registerSlashjs).
 
 ![slash command](https://cdn.discordapp.com/attachments/1053037836045127761/1199518724957417583/image.png?ex=65c2d5de&is=65b060de&hm=63a0eac7030506e0a712b0f075ec8534f34aee9848c9a76223f14800aaecc8f9&)
 
@@ -330,19 +334,19 @@ export const COMMANDS = {
 
 ## gameClass.js
 
-`gameCLass.js` has the structure of the `Wordle` `class` which is used within [**index.js**](#index.js). The class contains all unique properties and methods that are of every game instance. Having a `class` makes it easier to assign a `new` instance of that `class` whenever a new game starts. This makes sure that when different games are being played in different servers, the unique datas are encapsulated within that game instace hence not letting any conflict to ocuur.
+`gameCLass.js` has the structure of the `Wordle` `class` which is used within [**index.js**](#indexjs). The class contains all unique properties and methods that are of every game instance. Having a `class` makes it easier to assign a `new` instance of that `class` whenever a new game starts. This makes sure that when different games are being played in different servers, the unique datas are encapsulated within that game instace hence not letting any conflict to ocuur.
 
 
 
 ## index.js
 
-`index.js` is the main js file that intializes a new `Discord.Client`, sets up the bot, logs in and also takes care of listening to events and initializing game as well as take care of game instances, that is keeping track of new and old game instaces. This is being done using a `new Map()` called `gameInstances` which is inside [**gameClass.js**](#gameClass.js). Everytime a new game instance is initialized it is added to the `gameInstances` with the `server/guild id` as the key which is.Each game instace also remembers it's `guild id`. Once a game ends we use the `guild id` to `delete` that instance from `gameInstacnes`. It also starts the server which has beeen setup by [**server.js**](#server.js).
+`index.js` is the main js file that intializes a new `Discord.Client`, sets up the bot, logs in and also takes care of listening to events and initializing game as well as take care of game instances, that is keeping track of new and old game instaces. This is being done using a `new Map()` called `gameInstances` which is inside [**gameClass.js**](#gameClassjs). Everytime a new game instance is initialized it is added to the `gameInstances` with the `server/guild id` as the key which is.Each game instace also remembers it's `guild id`. Once a game ends we use the `guild id` to `delete` that instance from `gameInstacnes`. It also starts the server which has beeen setup by [**server.js**](#serverjs).
 
 
 
 ## registerSlash.js
 
-When making `slash commands` for bot, it is required to use `Discord.REST` and `Discord.Routes` to register the slash command. The file basically uses these constructors as well as bot `TOKEN` and `Application Id` alongside all the commands initialized within [**commands.js**](#commands.js) to register the `slash commands`
+When making `slash commands` for bot, it is required to use `Discord.REST` and `Discord.Routes` to register the slash command. The file basically uses these constructors as well as bot `TOKEN` and `Application Id` alongside all the commands initialized within [**commands.js**](#commandsjs) to register the `slash commands`
 
 
 
