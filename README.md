@@ -8,20 +8,20 @@
 
 [Code Explanation](#code-explanation)
 
-* [api /]
+* api /
     * [fetchWord.js](#fetchWordjs)
     * [isValid.js](#isValidjs)
 
-* [gameFunction /]
+* gameFunction /
     * [handleGuesses.js](#handleGuessesjs)
     * [handleWinOrLose.js](#handleWinOrLosejs)
     * [sendHelpEmbed.js](#sendHelpEmbedjs)
     * [setGame.js](#setGamejs)
 
-* [slashCommands /]
+* slashCommands /
     * [commands.js](#commandsjs)
 
-* [utils /]
+* utils /
     * [canvas.js](#canvasjs)
     * [prefix&command.js](#prefix&commandjs)
 
