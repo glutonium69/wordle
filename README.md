@@ -7,7 +7,7 @@ Wordle bot
 * [How to play](#how-to-play)
     * [Slash Command](#slash-command)
     * [Prefix Command](#prefix-command)
-    * [Color Definition](#color-definition)
+    * [Color Definition](#color-definitions)
 
 * [Color definitions](#color-definitions)
 
