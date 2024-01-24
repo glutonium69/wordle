@@ -8,22 +8,22 @@
 
 [Code Explanation](#code-explanation)
 
-* [api](#api)
-    * [fetchWord.js](#fetchWord.js)
-    * [isValid.js](#isValid.js)
+* [api /](#api)
+    * [fetchWord.js](#fetchWordjs)
+    * [isValid.js](#isValidjs)
 
-* [gameFunction](#gameFunction)
-    * [handleGuesses.js](#handleGuesses.js)
-    * [handleWinOrLose.js](#handleWinOrLose.js)
-    * [sendHelpEmbed.js](#sendHelpEmbed.js)
-    * [setGame.js](#setGame.js)
+* [gameFunction /](#gameFunction)
+    * [handleGuesses.js](#handleGuessesjs)
+    * [handleWinOrLose.js](#handleWinOrLosejs)
+    * [sendHelpEmbed.js](#sendHelpEmbedjs)
+    * [setGame.js](#setGamejs)
 
-* [slashCommands](#slashCommands)
-    * [commands.js](#commands.js)
+* [slashCommands /](#slashCommands)
+    * [commands.js](#commandsjs)
 
-* [utils](#utils)
-    * [canvas.js](#canvas.js)
-    * [prefix&command.js](#prefix&command.js)
+* [utils /](#utils)
+    * [canvas.js](#canvasjs)
+    * [prefix&command.js](#prefix&commandjs)
 
 
 
@@ -98,7 +98,7 @@ The project as of now has the following folder/file tree (ordered alphabetically
 Let's take a look a brief look at what each of those files are responsible for.
 
 
-## api
+## api /
 
 ### fetchWord.js
 
@@ -130,7 +130,7 @@ in case of an `error` (i.e `catch(){...}` block executed).
 
 
 
-## gameFunction
+## gameFunction /
 
 ### handleGuesses.js
 
@@ -236,7 +236,7 @@ This function only runs once the game has started. This intializes the game by s
 
 
 
-## slashCommands
+## slashCommands /
 
 ### commands.js
 `commands.js` contains `objects` for all the `slash commands` for the bot. In order to register slash command in discord each command must be of an `object` of the following structure (excluding optional `key, value` pairs).
@@ -253,7 +253,7 @@ The file exports an `array` of all `slash command` `object` which is then used w
 
 
 
-## utils
+## utils /
 
 ### canvas.js
 
