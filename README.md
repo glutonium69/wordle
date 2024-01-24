@@ -45,10 +45,10 @@ Wordle is a word game where a random word of a certain length is picked and the 
 
 ## How to play
 
-### Slash Command :
+### Slash Command
 * In the chatbox, type "/" and from there you can click the bot icon from the bot list on the left and click on the command you want to execute. If exists, optional parameters would show up when clicking a command, you can click on them and fill them as required if you need so.
 
-### Prefix Command :
+### Prefix Command
 * To start a new game, type: ` .wordle `.
   * This command will only work once a game ends.
   * **_Optional Parameters_**
