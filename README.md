@@ -1,12 +1,12 @@
 # Table of contents
 
-[Wordle bot](#wordle-bot)
+Wordle bot
 
 * [Introduction](#introduction)
 * [How to play](#how-to-play)
 * [Color definitions](#color-definitions)
 
-[Code Explanation](#code-explanation)
+Code Explanation
 
 * api /
     * [fetchWord.js](#fetchWordjs)
