@@ -25,6 +25,10 @@ Code Explanation
     * [canvas.js](#canvasjs)
     * [prefix&command.js](#prefix&commandjs)
 
+* [gameClass.js](#gameClassjs)
+* [index.js](#indexjs)
+* [registerSlash.js](#registerSlashjs)
+* [server.js](#serverjs)
 
 
 # Wordle bot
@@ -88,8 +92,6 @@ The project as of now has the following folder/file tree (ordered alphabetically
 │
 ├── gameClass.js
 ├── index.js
-├── README.md
-├── package.txt
 ├── registerSlash.js
 ├── server.js
 
