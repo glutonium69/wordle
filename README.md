@@ -3,12 +3,17 @@
 * [Wordle bot](#wordle-bot)
 
     * [Introduction](#introduction)
-    
+
     * [How to play](#how-to-play)
         * [Slash Command](#slash-command)
         * [Prefix Command](#prefix-command)
         * [Color Definition](#color-definitions)
-    
+
+    * [Code integration](#code-integration)
+        * [Prerequisite](#prerequisite)
+        * [Installation](#installation)
+        * [Code setup](#code-setup)
+
     * [Color definitions](#color-definitions)
 
 * [Code Explanation](#code-explanation)
@@ -16,25 +21,27 @@
     * [api /](#api-)
         * [fetchWord.js](#fetchWordjs)
         * [isValid.js](#isValidjs)
-    
+
     * [gameFunction /](#gameFunction-)
         * [handleGuesses.js](#handleGuessesjs)
         * [handleWinOrLose.js](#handleWinOrLosejs)
         * [sendHelpEmbed.js](#sendHelpEmbedjs)
         * [setGame.js](#setGamejs)
-    
+
     * [slashCommand /](#slashCommand-)
         * [commands.js](#commandsjs)
-    
+
     * [utils /](#utils-)
         * [canvas.js](#canvasjs)
         * [prefix&command.js](#prefix&commandjs)
-    
+
     * [gameClass.js](#gameClassjs)
     * [index.js](#indexjs)
     * [registerSlash.js](#registerSlashjs)
     * [server.js](#serverjs)
-    
+
+---
+---
 
 # Wordle bot
 Welcome to the Wordle Bot! Here you will find all the info about the bot you need.
@@ -79,7 +86,70 @@ If not a valid word then the bot will notify
 * :black_large_square: Black tiles indicate an incorrect letter
 
 
+---
+---
 
+
+## Code integration
+
+If you are looking forward to using the code for your own bot application then you should follow the following steps.
+
+### Prerequisite
+
+* Make sure to have your bot application ready. You can make bot application from [here](https://discord.com/developers/applications). Log in with your discord account if needed.
+
+* Make sure to have `node` installed so you can run `npm` command.
+
+### Installation
+
+1. Via `github cli` :
+    * If you have `github cli` then click the blue button that says `< > Code` and copy the link shown in the image.
+
+    * Using your terminal navigate to the directory where you want to clone the repo and paste the link in and hit `enter`.
+
+    * You can also just copy the link from within the URL and in your terminal run the following command.
+
+    * `git clone "URL"`
+
+2. Via `.zip` file :
+
+    * Or if you don't have `github cli` installed then download the code as `.zip`.
+
+    * Then go to the directory of your choice and `unzip` the file.
+
+![code installation](https://cdn.discordapp.com/attachments/974032667450413098/1200232925841588366/Screenshot_2024-01-26_5.16.50_AM.png?ex=65c56f04&is=65b2fa04&hm=1ab3ead3ea8e5671168ad981bc8bdf589b510b66e66170ba7598d1d034905176&)
+
+### Code setup
+
+1. Within the project directory, look for a `.env` file.
+
+2. Now open up the `.env`. You should see something like the following. If you don't find the `.env` file then make one and copy paste the following code.
+
+```
+TOKEN = "put your discord toke here"
+APPLICATION_ID = "put your application id here"
+```
+
+3. Now go to this [URL](https://discord.com/developers/applications).
+
+4. Select your bot application and navigate to the "**Bot**" from the navigation section. And copy your discord `TOKEN` (Reset token if needed). Now paste it in the `.env` file within the double quote where it says `put your discord toke here`.
+
+> _**CAUTION: DO NOT share your discord "TOKEN" with anyone. If you have accidentally leaked your dicord "TOKEN" then go to the same [URL](https://discord.com/developers/applications) and from where you copied your discord "TOKE", hit "Reset Token".**_
+
+5. Now go the same [URL](https://discord.com/developers/applications) and navigate to the `General Information` section and from there copy your `Application ID` and paste it in your `.env` file.
+
+6. Once those done, open up the terminal.
+
+7. Navigate inside the project directory and run the following command,
+
+```
+npm install && npm start
+```
+
+8. If done properly, this will start your bot and your bot should be online. And it will be online as long as the code + terminal is running.
+
+---
+---
 
 ## Code Explanation
 
@@ -342,6 +412,11 @@ export const COMMANDS = {
 
 `index.js` is the main js file that intializes a new `Discord.Client`, sets up the bot, logs in and also takes care of listening to events and initializing game as well as take care of game instances, that is keeping track of new and old game instaces. This is being done using a `new Map()` called `gameInstances` which is inside [**gameClass.js**](#gameClassjs). Everytime a new game instance is initialized it is added to the `gameInstances` with the `server/guild id` as the key which is.Each game instace also remembers it's `guild id`. Once a game ends we use the `guild id` to `delete` that instance from `gameInstacnes`. It also starts the server which has beeen setup by [**server.js**](#serverjs).
 
+
+## package.txt
+
+cs50 codespace I think has `package.json` in their `.gitignore` hence it doesn't get pushed to the repo
+Which is why I am using `package.txt` to store all the `dependency packages` / the literal `package.json` code so anyone can simply make a `package.json`, paste the code in `package.txt` and subsequently run `npm install` to install all the dependencies.
 
 
 ## registerSlash.js
