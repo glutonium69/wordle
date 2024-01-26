@@ -146,7 +146,13 @@ APPLICATION_ID = "put your application id here"
 npm install && npm start
 ```
 
-8. If done properly, this will start your bot and your bot should be online. And it will be online as long as the code + terminal is running.
+8. If done properly, this will start your bot and your bot should be online. And it will be online as long as the code + terminal is running. And you should see something like th following in your terminal.
+
+```
+Successfully reloaded application (/) commands.
+Server is listening on port 3000
+Bot is online with the username: <bot name><bot discriminator>
+```
 
 ---
 ---
