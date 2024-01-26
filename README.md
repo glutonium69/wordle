@@ -358,7 +358,7 @@ canvas(
   triesLeft: number
 )
 
-function drawTiles(
+drawTiles(
   canvasWidth: number,
   ctx: object,
   totalRows: number,
@@ -366,7 +366,7 @@ function drawTiles(
   letterStateArr: string[][]
 )
 
-function setLetters(
+setLetters(
   ctx: object,
   totalRows: number,
   totalColumns: number,
