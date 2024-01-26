@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
-const APPLICATION_ID = "1190795884389216296";
+const APPLICATION_ID = process.env.APPLICATION_ID;
 
 try {	
     await rest.put(Routes.applicationCommands(APPLICATION_ID), {
