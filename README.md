@@ -14,8 +14,6 @@
         * [Installation](#installation)
         * [Code setup](#code-setup)
 
-    * [Color definitions](#color-definitions)
-
 * [Code Explanation](#code-explanation)
 
     * [api /](#api-)
