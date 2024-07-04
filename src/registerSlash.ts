@@ -9,5 +9,5 @@ const APPLICATION_ID = process.env.APPLICATION_ID;
 rest.put(Routes.applicationCommands(APPLICATION_ID!), {
   body: commands
 })
-.then(() => console.log('Successfully reloaded application (/) commands.'))
-.catch(console.error)
+  .then(() => console.log('Successfully reloaded application (/) commands.'))
+  .catch(console.error)

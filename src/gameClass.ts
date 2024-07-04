@@ -108,8 +108,8 @@ export default class Wordle {
 			this.triesLeft,
 			this.WORD_LENGTH
 		);
-		
-		if(fetchedWordInfo === null){
+
+		if (fetchedWordInfo === null) {
 			// stop executing if api doesnt return a word
 			this.e.channel?.send("Ooops. The not could not fetch a random word ;--;");
 			this.initializeEnding(GAME_STATUS.LOST);
@@ -268,7 +268,7 @@ export default class Wordle {
 
 			if (e instanceof Message)
 				e.react("❌");
-			
+
 			return;
 		}
 

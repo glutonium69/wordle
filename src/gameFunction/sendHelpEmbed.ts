@@ -41,9 +41,9 @@ const helpEmbed = new EmbedBuilder()
 	.setTitle("Wordle Bot Help")
 	.setDescription(helpDescription)
 	.setColor("#03b1fc")
-	.setFooter({text: "Good luck and have fun playing!"})
+	.setFooter({ text: "Good luck and have fun playing!" })
 
 
-export default function sendHelpEmbed(channel: Message<boolean>["channel"] | Interaction<CacheType>["channel"]){
-	channel?.send({embeds: [helpEmbed]});
+export default function sendHelpEmbed(channel: Message<boolean>["channel"] | Interaction<CacheType>["channel"]) {
+	channel?.send({ embeds: [helpEmbed] });
 }

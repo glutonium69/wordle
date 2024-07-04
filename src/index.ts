@@ -20,11 +20,11 @@ async function initializeGame(e: Message<boolean> | Interaction<CacheType>, user
 	// get the server id
 	const serverId: string = e.guildId ? e.guildId : "";
 
-	if(serverId === ""){
+	if (serverId === "") {
 		return;
 	}
 
-	
+
 
 	// pass the user message if an instance of the game class exists
 	if (gameInstances.has(serverId)) {

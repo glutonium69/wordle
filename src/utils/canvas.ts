@@ -86,7 +86,7 @@ function drawTiles(
 	// the width of the canvas after subtracting the total amount of gaps
 	const leftOverWidth = canvasWidth - ((totalColumns + 1) * gap);
 	const tileWidth = leftOverWidth / totalColumns;
-	
+
 	const tileColor = {
 		incorrect_letter: "#3a3a3c",
 		correct_letter: "#538d4e",

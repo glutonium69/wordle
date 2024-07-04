@@ -34,12 +34,12 @@ export default function handleWinOrLoss(
 
 	return {
 		win: () => {
-			if(e instanceof Message) e.reply("Congrats!!");
-			else if(e instanceof CommandInteraction) e.reply("Congrats!!");
+			if (e instanceof Message) e.reply("Congrats!!");
+			else if (e instanceof CommandInteraction) e.reply("Congrats!!");
 		},
 		loss: () => {
-			if(e instanceof Message) e.reply("Better luck next time!");
-			else if(e instanceof CommandInteraction) e.reply("Better luck next time!");
+			if (e instanceof Message) e.reply("Better luck next time!");
+			else if (e instanceof CommandInteraction) e.reply("Better luck next time!");
 		}
 	}
 }

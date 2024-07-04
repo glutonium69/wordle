@@ -16,13 +16,13 @@ async function getWord(wordLength: number): Promise<{ valid: boolean, word: stri
 	do {
 		word = (await fetchWord(wordLength));
 
-		if(word === null){
+		if (word === null) {
 			attempts++;
 			continue;
 		}
 
 		word = await isValid(word);
-		
+
 		attempts++;
 
 		if (attempts >= maxAttempts) {
@@ -39,7 +39,7 @@ export default async function setGame(
 	letterStateArr: TileColor[][],
 	triesLeft: number,
 	wordLength: number
-): Promise<{valid: boolean, word: string, definition: string} | null> {
+): Promise<{ valid: boolean, word: string, definition: string } | null> {
 
 	if (e instanceof Message)
 		e.reply("Starting game...");
