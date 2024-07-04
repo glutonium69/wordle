@@ -1,5 +1,5 @@
 import { COMMANDS, PREFIX } from "../utils/prefix&command.js";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, Interaction, CacheType, Message } from "discord.js";
 // this is written in md since discord allows md
 const helpDescription = `
 # PREFIX = "\`${PREFIX}\`"
@@ -44,6 +44,6 @@ const helpEmbed = new EmbedBuilder()
 	.setFooter({text: "Good luck and have fun playing!"})
 
 
-export default function sendHelpEmbed(e){
-	e.reply({embeds: [helpEmbed]});
+export default function sendHelpEmbed(channel: Message<boolean>["channel"] | Interaction<CacheType>["channel"]){
+	channel?.send({embeds: [helpEmbed]});
 }

@@ -6,3 +6,5 @@ package-lock.json
 .config
 .git
 .env
+.vscode
+dist

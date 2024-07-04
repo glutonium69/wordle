@@ -1,4 +1,4 @@
-export default async function fetchWord(wordLength){
+export default async function fetchWord(wordLength: number): Promise<string | null>{
 	try{
 		const URL = "https://random-word-api.herokuapp.com/word?length=" + wordLength;
 		const res = await fetch(URL)
@@ -7,6 +7,6 @@ export default async function fetchWord(wordLength){
 	}
 	catch(err){
 		console.log(err);
-		return "Error";
-	}p
+		return null;
+	}
 }
