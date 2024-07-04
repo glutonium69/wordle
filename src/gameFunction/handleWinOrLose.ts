@@ -43,33 +43,3 @@ export default function handleWinOrLoss(
 		}
 	}
 }
-
-// export function handleWin(
-// 	e: Message<boolean> | Interaction<CacheType>,
-// 	guessedWordArr: string[],
-// 	letterStateArr: TileColor[][],
-// 	PICKED_WORD: string,
-// 	triesLeft: number,
-// 	PICKED_WORD_DEFINITION: string
-// ) {
-// 	e.reply("Congrats!!");
-// 	e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
-// 	handleGuesses(
-// 		e,
-// 		guessedWordArr,
-// 		letterStateArr,
-// 		PICKED_WORD,
-// 		triesLeft
-// 	);
-// }
-
-// export function handleLoose(e, guessedWordArr, letterStateArr, PICKED_WORD, triesLeft, PICKED_WORD_DEFINITION) {
-// 	handleGuesses(
-// 		e,
-// 		guessedWordArr,
-// 		letterStateArr,
-// 		PICKED_WORD,
-// 		triesLeft
-// 	);
-// 	e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
-// }
