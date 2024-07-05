@@ -1,3 +1,5 @@
+# The project has been migrated from javascript to typescript. So the doc needs some updating to be done to. Will do when I am feeling "not" lazy (prolly never)
+
 # Table of contents
 
 * [Wordle bot](#wordle-bot)
