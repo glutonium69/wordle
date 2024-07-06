@@ -1,7 +1,7 @@
 import { createCanvas, CanvasRenderingContext2D, registerFont } from "canvas";
 import { TileColor } from "./enums";
 
-registerFont("/home/user/wordle/menloFont.ttf", { family: "menloFont" });
+registerFont("./menloFont.ttf", { family: "menloFont" });
 
 export default function canvas(
 	totalColumns: number,

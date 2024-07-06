@@ -4,8 +4,10 @@
   "description": "",
   "main": "output/index.js",
   "scripts": {
-    "ts": "tsc --outDir dist/",
-    "start": "nodemon dist/index.js"
+    "build": "tsc --outDir dist/",
+    "start": "node dist/index.js",
+    "nodemon": "nodemon dist/index.js",
+    "ts": "tsc --watch --outDir dist/"
   },
   "keywords": [],
   "author": "",
