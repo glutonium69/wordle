@@ -30,16 +30,36 @@ export default function handleWinOrLoss(
 		triesLeft
 	);
 
-	e.channel!.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
+	if (e instanceof CommandInteraction) {
+		if (!e.replied && !e.deferred) {
+			e.reply(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
+		} else if (e.replied) {
+			e.followUp(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
+		}
+	} else if (e instanceof Message) {
+		e.channel.send(wordAndDefinition(PICKED_WORD, PICKED_WORD_DEFINITION));
+	}
 
 	return {
 		win: () => {
 			if (e instanceof Message) e.reply("Congrats!!");
-			else if (e instanceof CommandInteraction) e.reply("Congrats!!");
+			else if (e instanceof CommandInteraction) {
+				if (!e.replied && !e.deferred) {
+					e.reply("Congrats!!");
+				} else if (e.replied) {
+					e.followUp("Congrats!!");
+				}
+			}
 		},
 		loss: () => {
 			if (e instanceof Message) e.reply("Better luck next time!");
-			else if (e instanceof CommandInteraction) e.reply("Better luck next time!");
+			else if (e instanceof CommandInteraction) {
+				if (!e.replied && !e.deferred) {
+					e.reply("Better luck next time!");
+				} else if (e.replied) {
+					e.followUp("Better luck next time!");
+				}
+			}
 		}
 	}
 }
