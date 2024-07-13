@@ -1,21 +1,28 @@
 export default async function fetchWord(wordLength: number): Promise<string | null> {
 	try {
-		const URL_PRIMARY = "https://random-word-api.herokuapp.com/word?length=" + wordLength;
-		const resPrimary = await fetch(URL_PRIMARY);
-                if(!resPrimary.ok) {
-			const URL_SECONDARY = "https://randomwordapi.onrender.com/word/rand/" + wordLength;
-			const resSecondary = await fetch(URL_SECONDARY);
-			if(!resSecondary.ok) {
-				return null;
-			}
-			const dataSecondary = await resSecondary.json()
-			return dataSecondary.word;
-		};
-		const dataPrimary = await resPrimary.json()
-		return dataPrimary[0];
+		const URL = "https://random-word-api.herokuapp.com/word?length=" + wordLength;
+		const res = await fetch(URL)
+		const data = await res.json()
+		return data[0];
 	}
 	catch (err) {
 		console.log(err);
 		return null;
 	}
 }
+
+/*
+export default async function fetchWord(wordLength: number): Promise<string | null> {
+	try {
+		const URL = "https://randomwordapi.onrender.com/word/rand/" + wordLength;
+		const res = await fetch(URL)
+                if(!res.ok) return null;
+		const data = await res.json()
+		return data.word;
+	}
+	catch (err) {
+		console.log(err);
+		return null;
+	}
+}
+*/
