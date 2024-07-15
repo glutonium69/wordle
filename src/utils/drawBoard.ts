@@ -3,16 +3,15 @@ import { TileColor } from "./enums";
 
 registerFont("./menloFont.ttf", { family: "menloFont" });
 
-export default function canvas(
+export default function drawBoard(
 	totalColumns: number,
 	totalRows: number,
 	guessedWordArr: string[],
 	letterStateArr: TileColor[][],
 	triesLeft: number
 ): Buffer {
-
 	const triesLeftHeight = 40;
-	const boardWidth = 300;
+	const boardWidth = 600;
 	const canvasWidth = boardWidth;
 	// (rows / colums) = (width / height) = ratio 
 	// height = ratio * width
@@ -55,7 +54,7 @@ export default function canvas(
 	ctx.fillStyle = boardColor;
 	ctx.fillRect(pos.x, pos.y, triesLeftWidth, triesLeftHeight);
 
-	ctx.font = `bold 15px menloFont`;
+	ctx.font = `bold 25px menloFont`;
 	ctx.fillStyle = "#FFFFFF";
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
@@ -82,7 +81,7 @@ function drawTiles(
 
 
 	// gap between tiles
-	const gap = 10;
+	const gap = 20;
 	// the width of the canvas after subtracting the total amount of gaps
 	const leftOverWidth = canvasWidth - ((totalColumns + 1) * gap);
 	const tileWidth = leftOverWidth / totalColumns;
@@ -146,7 +145,7 @@ function setLetters(
 				? guessedWordArr[i][j].toUpperCase()
 				: "";
 
-			ctx.font = "bold 25px menloFont";
+			ctx.font = "bold 35px menloFont";
 			ctx.fillStyle = "#FFFFFF";
 			ctx.textAlign = "center";
 			ctx.textBaseline = "middle";

@@ -78,6 +78,11 @@ export default class Wordle {
 	triesLeft: number;
 	GUESSED_WORD_ARR: string[];
 	LETTER_STATE_ARR: TileColor[][];
+	KEYBOARD_STATE: {
+		correct: string[],
+		incorrect: string[],
+		wrongPos: string[]
+	};
 	shutDownTimer: NodeJS.Timeout | undefined;
 	currentEvent: Message<boolean> | Interaction<CacheType>;
 
@@ -92,6 +97,11 @@ export default class Wordle {
 		this.triesLeft = TOTAL_TRIES_DEFAULT;
 		this.GUESSED_WORD_ARR = [];
 		this.LETTER_STATE_ARR = setLetterStateArr(TOTAL_TRIES_DEFAULT, WORD_LENGTH_DEFAULT);
+		this.KEYBOARD_STATE = {
+			correct: [],
+			incorrect: [],
+			wrongPos: []
+		}
 		this.shutDownTimer = undefined;
 		this.currentEvent = this.e;
 	}
@@ -106,7 +116,8 @@ export default class Wordle {
 			this.GUESSED_WORD_ARR,
 			this.LETTER_STATE_ARR,
 			this.triesLeft,
-			this.WORD_LENGTH
+			this.WORD_LENGTH,
+			this.KEYBOARD_STATE
 		);
 
 		if (fetchedWordInfo === null) {
@@ -136,7 +147,8 @@ export default class Wordle {
 				this.LETTER_STATE_ARR,
 				this.PICKED_WORD,
 				this.triesLeft,
-				this.PICKED_WORD_DEFINITION
+				this.PICKED_WORD_DEFINITION,
+				this.KEYBOARD_STATE
 			).win();
 		}
 		else if (result === GAME_STATUS.LOST) {
@@ -146,7 +158,8 @@ export default class Wordle {
 				this.LETTER_STATE_ARR,
 				this.PICKED_WORD,
 				this.triesLeft,
-				this.PICKED_WORD_DEFINITION
+				this.PICKED_WORD_DEFINITION,
+				this.KEYBOARD_STATE
 			).loss();
 		}
 
@@ -290,7 +303,8 @@ export default class Wordle {
 			this.GUESSED_WORD_ARR,
 			this.LETTER_STATE_ARR,
 			this.PICKED_WORD,
-			this.triesLeft
+			this.triesLeft,
+			this.KEYBOARD_STATE
 		);
 
 		this.resetTimer()

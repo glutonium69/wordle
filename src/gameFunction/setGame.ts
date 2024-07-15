@@ -38,7 +38,12 @@ export default async function setGame(
 	guessedWordArr: string[],
 	letterStateArr: TileColor[][],
 	triesLeft: number,
-	wordLength: number
+	wordLength: number,
+	keyboardState: {
+		correct: string[],
+		incorrect: string[],
+		wrongPos: string[]
+	}
 ): Promise<{ valid: boolean, word: string, definition: string } | null> {
 
 	if (e instanceof Message)
@@ -57,7 +62,8 @@ export default async function setGame(
 		guessedWordArr,
 		letterStateArr,
 		PICKED_WORD.word,
-		triesLeft
+		triesLeft,
+		keyboardState
 	);
 
 	return PICKED_WORD;

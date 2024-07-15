@@ -19,7 +19,12 @@ export default function handleWinOrLoss(
 	letterStateArr: TileColor[][],
 	PICKED_WORD: string,
 	triesLeft: number,
-	PICKED_WORD_DEFINITION: string
+	PICKED_WORD_DEFINITION: string,
+	keyboardState: {
+		correct: string[],
+		incorrect: string[],
+		wrongPos: string[]
+	}
 ): { win: () => void, loss: () => void } {
 
 	handleGuesses(
@@ -27,7 +32,8 @@ export default function handleWinOrLoss(
 		guessedWordArr,
 		letterStateArr,
 		PICKED_WORD,
-		triesLeft
+		triesLeft,
+		keyboardState
 	);
 
 	if (e instanceof CommandInteraction) {
